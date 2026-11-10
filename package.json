@@ -1,0 +1,20 @@
+{
+  "name": "clicker-studio",
+  "version": "1.0.0",
+  "description": "可自訂排列、鍵帽、逐鍵配色與圖案的 3D 列印紓壓按鍵生成器",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild app.js --bundle --minify --outfile=dist/app.js",
+    "test": "node verify.cjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@jscad/modeling": "^2.13.0",
+    "esbuild": "^0.28.2",
+    "fflate": "^0.8.3",
+    "three": "^0.187.0"
+  }
+}
