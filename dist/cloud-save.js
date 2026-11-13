@@ -8,8 +8,8 @@ function setSettings(o){for(const [id,value] of Object.entries(o||{})){const e=$
 function parseHex(h){return[1,3,5].map(i=>parseInt(h.slice(i,i+2),16))}
 function captureMask(){
  const src=$('#artPreview'),cv=document.createElement('canvas');cv.width=cv.height=48;const c=cv.getContext('2d',{willReadFrequently:true});c.drawImage(src,0,0,48,48);
- const px=c.getImageData(0,0,48,48),cap=parseHex($('#keyCapColor').value.toLowerCase());
- for(let i=0;i<px.data.length;i+=4){const same=Math.abs(px.data[i]-cap[0])<2&&Math.abs(px.data[i+1]-cap[1])<2&&Math.abs(px.data[i+2]-cap[2])<2;px.data[i]=0;px.data[i+1]=0;px.data[i+2]=0;px.data[i+3]=same?0:255}
+ const source=src.getContext('2d',{willReadFrequently:true}).getImageData(0,0,144,144).data,px=c.createImageData(48,48),cap=parseHex($('#keyCapColor').value.toLowerCase());
+ for(let y=0;y<48;y++)for(let x=0;x<48;x++){const a=((y*3+1)*144+x*3+1)*4,b=(y*48+x)*4,same=Math.abs(source[a]-cap[0])<2&&Math.abs(source[a+1]-cap[1])<2&&Math.abs(source[a+2]-cap[2])<2;px.data[b]=px.data[b+1]=px.data[b+2]=0;px.data[b+3]=same?0:255}
  c.putImageData(px,0,0);return cv.toDataURL('image/png')
 }
 async function snapshot(){
