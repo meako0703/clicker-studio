@@ -15,9 +15,8 @@ function captureMask(){
 async function snapshot(){
  const layout=document.querySelector('[data-layout].active')?.dataset.layout||'arrows';
  const view=document.querySelector('[data-view].active')?.dataset.view||'assembled';
- const cellButtons=[...document.querySelectorAll('#customGrid button')];
- const cells=cellButtons.filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>{const m=b.getAttribute('aria-label').match(/第 (\d+) 列第 (\d+) 欄/);return [+m[2]-1,+m[1]-1]});
  const target=$('#target'),old=target.value,keys=[];
+ const cells=[...target.options].filter(o=>o.value!=='all').map(o=>{const m=o.textContent.match(/第 (\d+) 列、第 (\d+) 欄/);return m?[+m[2]-1,+m[1]-1]:null}).filter(Boolean);
  for(const option of [...target.options]){if(option.value==='all')continue;target.value=option.value;target.dispatchEvent(new Event('change',{bubbles:true}));await wait();
  const type=$('#artType').value,art={type,text:$('#artText').value,size:+$('#artSize').value,mode:$('#imageMode').value,threshold:+$('#threshold').value};
  if(type==='image')art.mask=captureMask();
